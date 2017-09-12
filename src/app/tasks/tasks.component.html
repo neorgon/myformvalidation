@@ -1,0 +1,14 @@
+<form action="">
+  <div>
+    <label for="project">Project Name:</label>
+    <select id="project">
+      <option *ngFor="let p of projects">{{p}}</option>
+    </select>
+  </div>
+  <div>
+    <label for="issue">Issue Type:</label>
+    <select id="issue">
+      <option *ngFor="let i of issues">{{i}}</option>
+    </select>
+  </div>
+</form>
