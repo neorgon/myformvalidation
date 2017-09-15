@@ -1,0 +1,15 @@
+.ng-valid[required], .ng-valid.required  {
+  border: solid 1px rgb(221, 221, 221);
+  border-left: solid 5px #42a948;
+  padding: 2px;
+}
+
+.ng-invalid:not(form)  {
+  border: solid 1px rgb(221, 221, 221);
+  border-left: solid 5px #a94442;
+  padding: 2px;
+}
+
+div {
+  padding-bottom: 10px;
+}

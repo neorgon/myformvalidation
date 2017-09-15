@@ -1,14 +1,41 @@
-<form action="">
+<form #taskForm="ngForm">
   <div>
     <label for="project">Project Name:</label>
-    <select id="project">
-      <option *ngFor="let p of projects">{{p}}</option>
+    <select id="project" name="project" [(ngModel)]="model.project">
+      <option *ngFor="let p of projects" [value]="p">{{p}}</option>
     </select>
   </div>
   <div>
     <label for="issue">Issue Type:</label>
-    <select id="issue">
-      <option *ngFor="let i of issues">{{i}}</option>
+    <select id="issue" name="issue" [(ngModel)]="model.issue">
+      <option *ngFor="let i of issues" [value]="i">{{i}}</option>
     </select>
   </div>
+  <div>
+    <label for="summary">Summary:</label>
+    <input
+      id="summary" name="summary" type="text"
+      required forbiddenName="qa"
+      [(ngModel)]="model.summary" #summary="ngModel" #spy />
+      {{spy.className}}
+    <div *ngIf="summary.invalid && (summary.dirty || summary.touched)">
+      <div *ngIf="summary.errors.required">
+        Summary is required.
+      </div>
+      <div *ngIf="summary.errors.forbiddenName">
+        Summary cannot be qa.
+      </div>
+    </div>
+  </div>
+  <div>
+    <label for="points">Story points:</label>
+    <input id="points" name="points" type="text" [(ngModel)]="model.points" />
+  </div>
+  <div>
+    <label for="environ">Environments:</label>
+    <input id="environ" name="environ" type="text" [(ngModel)]="model.environment" />
+  </div>
+  <button type="submit">Submit</button>
 </form>
+<hr  />
+{{diagnostic}}
