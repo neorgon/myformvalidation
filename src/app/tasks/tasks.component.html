@@ -1,13 +1,13 @@
-<form #taskForm="ngForm">
+<form [formGroup]="taskForm">
   <div>
     <label for="project">Project Name:</label>
-    <select id="project" name="project" [(ngModel)]="model.project">
+    <select id="project" name="project" [(ngModel)]="task.project">
       <option *ngFor="let p of projects" [value]="p">{{p}}</option>
     </select>
   </div>
   <div>
     <label for="issue">Issue Type:</label>
-    <select id="issue" name="issue" [(ngModel)]="model.issue">
+    <select id="issue" name="issue" [(ngModel)]="task.issue">
       <option *ngFor="let i of issues" [value]="i">{{i}}</option>
     </select>
   </div>
@@ -15,8 +15,8 @@
     <label for="summary">Summary:</label>
     <input
       id="summary" name="summary" type="text"
-      required forbiddenName="qa"
-      [(ngModel)]="model.summary" #summary="ngModel" #spy />
+      required
+      [(ngModel)]="task.summary" #summary="ngModel" #spy />
       {{spy.className}}
     <div *ngIf="summary.invalid && (summary.dirty || summary.touched)">
       <div *ngIf="summary.errors.required">
@@ -29,11 +29,11 @@
   </div>
   <div>
     <label for="points">Story points:</label>
-    <input id="points" name="points" type="text" [(ngModel)]="model.points" />
+    <input id="points" name="points" type="text" [(ngModel)]="task.points" />
   </div>
   <div>
     <label for="environ">Environments:</label>
-    <input id="environ" name="environ" type="text" [(ngModel)]="model.environment" />
+    <input id="environ" name="environ" type="text" [(ngModel)]="task.environment" formControlName="environment" />
   </div>
   <button type="submit">Submit</button>
 </form>

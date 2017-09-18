@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as listProjects from '../const/projects';
 import * as listIssues from '../const/issues';
 import { Task } from './tasks';
+import { forbiddenNameValidator } from './forbidden-name.directive';
 
 @Component({
   selector: 'app-tasks',
@@ -11,12 +13,18 @@ import { Task } from './tasks';
 })
 export class TasksComponent implements OnInit {
 
+  //@Input() task : Task;
+
   private projects = listProjects.PROJECTS;
   private issues = listIssues.ISSUES;
 
-  constructor() { }
+  public taskForm: FormGroup;
 
-  model = new Task('Project 2', 'Bug', 'Tester', 5, 'Dev');
+  constructor(
+    private fb: FormBuilder
+  ) { }
+
+  task = new Task('Project 2', 'Bug', 'Tester', 5, 'Dev');
 
   submitted = false;
 
@@ -25,10 +33,19 @@ export class TasksComponent implements OnInit {
   }
 
   get diagnostic() {
-    return JSON.stringify(this.model);
+    return JSON.stringify(this.task);
   }
 
   ngOnInit() {
+    this.taskForm = this.fb.group({
+      environment: [
+        this.task.environment,
+        [
+          Validators.required,
+          forbiddenNameValidator(/bob/i)
+        ]
+      ]
+    })
   }
 
 }
