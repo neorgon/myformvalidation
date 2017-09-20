@@ -13,8 +13,6 @@ import { forbiddenNameValidator } from './forbidden-name.directive';
 })
 export class TasksComponent implements OnInit {
 
-  //@Input() task : Task;
-
   private projects = listProjects.PROJECTS;
   private issues = listIssues.ISSUES;
 
@@ -38,6 +36,9 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
     this.taskForm = this.fb.group({
+      project: [
+        this.task.project
+      ],
       environment: [
         this.task.environment,
         [
