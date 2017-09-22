@@ -1,0 +1,64 @@
+<h1>Template-Driven Form</h1>
+
+  <form #taskForm="ngForm">
+    <div [hidden]="taskForm.submitted">
+
+      <div>
+        <label for="project">Project:</label>
+        <select id="project" name="project"
+          [(ngModel)]="task.project" #project="ngModel">
+          <option *ngFor="let pr of projects" [value]="pr">{{pr}}</option>
+        </select>
+        <div *ngIf="project.invalid && project.touched">
+          <div *ngIf="project.errors.required">
+            Project is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="issue">Issue:</label>
+        <select id="issue" name="issue" required>
+          <option *ngFor="let is of issues" [value]="is">{{is}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="summary">Summary:</label>
+        <input id="summary" name="summary"
+          [(ngModel)]="task.summary" #summary="ngModel" />
+        <div *ngIf="summary.invalid && summary.touched">
+          <div *ngIf="summary.errors.required">
+            Summary is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="points">Points:</label>
+        <input id="points" name="points" [(ngModel)]="task.points" />
+      </div>
+      <div>
+        <label for="environment">Environment:</label>
+        <input id="environment" name="environment"
+          [(ngModel)]="task.environment" #environment="ngModel" />
+        <div *ngIf="environment.invalid && (environment.dirty || environment.touched)">
+          <div *ngIf="environment.errors.required">
+            Environment is required
+          </div>
+          <div *ngIf="environment.errors.forbiddenName">
+            Environment cannot be Dev.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="taskForm.invalid">
+        Submit
+      </button>
+      <button type="button" (click)="taskForm.resetForm({})">
+        Reset
+      </button>
+    </div>
+
+    <div *ngIf="taskForm.submitted">
+      <p>You've submitted your task, {{ taskForm.value.project }} Project!</p>
+      <button (click)="taskForm.resetForm({})">Add new task</button>
+    </div>
+  </form>

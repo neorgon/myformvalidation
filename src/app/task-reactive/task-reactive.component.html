@@ -1,0 +1,62 @@
+<h1>Reactive Form</h1>
+
+  <form [formGroup]="TaskForm" #formDir="ngForm">
+    <div [hidden]="formDir.submitted">
+
+      <div>
+        <label for="project">Project:</label>
+        <select id="project" formControlName="project" required>
+          <option *ngFor="let pr of projects" [value]="pr">{{pr}}</option>
+        </select>
+        <div *ngIf="project.invalid && project.touched">
+          <div *ngIf="project.errors.required">
+            Project is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="issue">Issue:</label>
+        <select id="issue" formControlName="issue" required>
+          <option *ngFor="let is of issues" [value]="is">{{is}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="summary">Summary:</label>
+        <input id="summary" formControlName="summary" required />
+        <div *ngIf="summary.invalid && summary.touched">
+          <div *ngIf="summary.errors.required">
+            Summary is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="points">Points:</label>
+        <input id="points" formControlName="points" />
+      </div>
+      <div>
+        <label for="environment">Environment:</label>
+        <input id="environment" formControlName="environment" required />
+        <div *ngIf="environment.invalid && (environment.dirty || environment.touched)">
+          <div *ngIf="environment.errors.required">
+            Environment is required
+          </div>
+          <div *ngIf="environment.errors.forbiddenName">
+            Environment cannot be Dev.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="TaskForm.invalid">
+        Submit
+      </button>
+      <button type="button" (click)="formDir.resetForm({})">
+        Reset
+      </button>
+
+    </div>
+  </form>
+
+  <div *ngIf="formDir.submitted">
+    <p>You've submitted your task for {{ TaskForm.value.project }} Project!</p>
+    <button (click)="formDir.resetForm({})">Add new task</button>
+  </div>
